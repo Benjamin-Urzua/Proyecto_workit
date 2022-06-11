@@ -8,7 +8,7 @@ def leer():
 
 @clientes.route("/clientes/crear")
 def crear():
-    return render_template('crear.html')
+    return render_template('/clientes/crear.html')
 
 @clientes.route("/clientes/actualizar")
 def actualizar():
