@@ -12,9 +12,9 @@ class Cliente(db.model):
     codDireccion=db.Column(db.Integer(11),   null=False), #poner foreign key luego
     codRespuesta=db.Column(db.Integer(11),   null=False), #poner foreign key luego
     fechaNacto=db.Column(db.Date,   null=False)
-    fotoPerfil=db.Column(db.String(2000))
+    codPerfilCli=db.Column(db.Integer(11), null=False)
     
-    def __init__(self, run, nombres, apellidos, telefono, correo, contrasena, codDireccion, codRespuesta, fechaNacto, fotoPerfil):
+    def __init__(self, run, nombres, apellidos, telefono, correo, contrasena, codDireccion, codRespuesta, fechaNacto, codPerfilCli):
         self.run = run
         self.nombres = nombres
         self.apellidos = apellidos
@@ -24,7 +24,7 @@ class Cliente(db.model):
         self.codDireccion = codDireccion
         self.codRespuesta = codRespuesta
         self.fechaNacto = fechaNacto
-        self.fotoPerfil = fotoPerfil
+        self.codPerfilCli = codPerfilCli
         
 class Especialista(db.model):
     __tablename__="tb_especialista"
@@ -39,11 +39,11 @@ class Especialista(db.model):
     cedulaFrontal=db.Column(db.String(2000),  null=False),
     cedulaTrasera=db.Column(db.String(2000),  null=False),
     certAntecedentes=db.Column(db.String(2000),  null=False),
-    fotoPerfil=db.Column(db.String(2000),  null=False),
+    codPerfilEsp =db.Column(db.Integer(11),  null=False),
     tituloProfesional=db.Column(db.String(2000),  null=False),
     disponibilidad=db.Column(db.Boolean,  null=False),
     
-    def __init__(self, run, nombres, apellidos, telefono, correo, contrasena, codDireccion, codProfesion, cedulaFrontal, cedulaTrasera,certAntecedentes,fotoPerfil,tituloProfesional,disponibilidad):
+    def __init__(self, run, nombres, apellidos, telefono, correo, contrasena, codDireccion, codProfesion, cedulaFrontal, cedulaTrasera,certAntecedentes,codPerfilEsp,tituloProfesional,disponibilidad):
         self.run = run
         self.nombres = nombres
         self.apellidos = apellidos
@@ -55,7 +55,7 @@ class Especialista(db.model):
         self.cedulaFrontal = cedulaFrontal
         self.cedulaTrasera = cedulaTrasera
         self.certAntecedentes = certAntecedentes
-        self.fotoPerfil = fotoPerfil
+        self.codPerfilEsp = codPerfilEsp
         self.tituloProfesional = tituloProfesional
         self.disponibilidad = disponibilidad
 
