@@ -1,6 +1,21 @@
 from utils.db import db
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import text
 
+def RetornarHistorial(run):
+    query = db.engine.execute(text("call  `sp_retornarHistorial`('{run}')".format(run=run)))
+    response = map(list,query)
+    '''
+    for item in response:
+        if (item.index(run) == 0):
+            item.pop(0)
+    print("pase el pop")
+    '''
+            
+    return response
+    
+
+
+'''
 class Cliente(db.model):
     __tablename__="tb_cliente"
     run=db.Column(db.String(10), primary_key=True, null=False),
@@ -128,3 +143,4 @@ class DetalleOrdenServicio(db.model):
         self. codTrabajoEspecialista = codTrabajoEspecialista
         self. codRubro = codRubro
         self. cantServicios = cantServicios
+'''
