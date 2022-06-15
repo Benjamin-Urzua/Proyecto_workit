@@ -25,29 +25,33 @@
   <body>
     <h1>Historial:</h1>
     <div class="container">
+      <table class="table">
+        <!-- Table headers -->
+        <th>
+          <tr
+            class="text-center align-middle bg-primary text-white font-weight-bold"
+          >
+            <td>Estado del trabajo</td>
+            <td>Cliente</td>
+            <td>Especialista</td>
+            <td>Fecha de inicio</td>
+            <td>Fecha de finalización</td>
+            <td>Descripción del trabajo</td>
+            <td>Servicio</td>
+          </tr>
+        </th>
 
-        <table class="table ">
-            <!-- Table headers -->
-            <th>
-              <tr class="text-center align-middle bg-primary text-white font-weight-bold">
-                <td>Estado del trabajo</td>
-                <td>Cliente</td>
-                <td>Especialista</td>
-                <td>Fecha de inicio</td>
-                <td>Fecha de finalización</td>
-                <td>Descripción del trabajo</td>
-                <td>Servicio</td>
-              </tr>
-            </th>
-      
-            {%for tupla in historial%}
-            <tr>
-              {%for item in tupla%}
-              <td class="text-center align-middle">{{item}}</td>
-              {%endfor%}
-            </tr>
-            {%endfor%}
-          </table>
+        {%for tupla in historial%}
+        <tr>
+          {%for item in tupla%}
+          {%if item == run%}
+          {%else%}
+          <td class="text-center align-middle">{{item}}</td>
+          {% endif %}
+          {%endfor%}
+        </tr>
+        {%endfor%}
+      </table>
     </div>
   </body>
 </html>

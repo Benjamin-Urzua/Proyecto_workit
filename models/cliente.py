@@ -4,13 +4,6 @@ from sqlalchemy import text
 def RetornarHistorial(run):
     query = db.engine.execute(text("call  `sp_retornarHistorial`('{run}')".format(run=run)))
     response = map(list,query)
-    '''
-    for item in response:
-        if (item.index(run) == 0):
-            item.pop(0)
-    print("pase el pop")
-    '''
-            
     return response
     
 

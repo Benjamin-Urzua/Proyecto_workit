@@ -12,9 +12,9 @@ def retornar_historial():
     historial = RetornarHistorial("20949993_2")
     return render_template("clientes/historial.html", historial = historial, run = "20949993_2")
 
-@clientes.route("/clientes/crear")
-def crear():
-    return render_template('/clientes/crear.html')
+@clientes.route("/clientes/registrarse")
+def register():
+    return render_template('/clientes/register.html')
 
 @clientes.route("/clientes/actualizar")
 def actualizar():

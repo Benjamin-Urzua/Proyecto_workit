@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="container " style="margin-top:10%;">
+        <div class="row  ">
+            <div class="col-md-6 text-sm-center text-md-center text-lg-start">
+                <h1>Work<span class="text-primary">It</span></h1>
+                <p>¡Registrate con nosotros para obtener el profesional que necesitas!</p>
+            </div>
+
+            <div class="col-md-6 offset-sm-3 offset-xs-3 offset-lg-0">
+                <form  action="submit" method="post">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="txt_nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="txt_nombres" >
+                        
+                            <label for="txt_contrasena" class="form-label">Contraseña</label>
+                            <input type="text" class="form-control" id="txt_contrasena" placeholder="********">
+
+                            <label for="txt_correo" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="txt_correo" placeholder="nombre@mail.com">
+                            <br/>
+                            <select class="form-select" aria-label="Seleccione una pregunta de seguridad">
+                                <option selected>Seleccione una pregunta de seguridad</option>
+                                <option value="1">¿Nombre de su primera mascota?</option>
+                                <option value="2">¿Cual es su color favorito?</option>
+                                <option value="3">¿Cual es su pelicula favorita?</option>
+                              </select>
+
+                            <input type="text" class="form-control" id="txt_respuestapreguntaseguridad" placeholder="Respuesta...">
+                        </div>
+                        <div class="col-auto">
+                            <label for="txt_apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="txt_apellidos" >
+                        
+                            <label for="txt_repetircontrasena" class="form-label">Repita contraseña</label>
+                            <input type="text" class="form-control" id="txt_repetircontrasena" placeholder="********">
+
+                            <label for="txt_telefono" class="form-label">Telefono</label>
+                            <div class="input-group mb-3">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+569</button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">+569</a></li>
+                                </ul>
+                                <input type="number" class="form-control" id="txt_telefono" aria-label="Text input with dropdown button">
+                              </div>
+
+                              <label for="txt_fechanacto" class="form-label">Fecha de nacimiento</label>
+                              <input type="date" class="form-control" id="txt_fechanacto" >
+                        </div>
+                    </div>
+                    <div class="text-center  mt-4">
+                        <button type="button" type= "submit"  class="btn btn-outline-dark btn-lg ">Registrarse</button>
+                        <h5>o</h5>
+                        <button type="button" type= "submit"  class="btn btn-danger btn-lg "><i class="bi bi-google"></i>  Continuar con Google</button> <br/>
+                        <button type="button" type= "submit"  class="btn btn-primary btn-lg mt-3 "><i class="bi bi-facebook"></i>  Continuar con Facebook</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
