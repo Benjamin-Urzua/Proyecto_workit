@@ -41,9 +41,9 @@
           </tr>
         </th>
 
-        {%for tupla in historial%}
+        {%for items in historial%}
         <tr>
-          {%for item in tupla%}
+          {%for item in items%}
           {%if item == run%}
           {%else%}
           <td class="text-center align-middle">{{item}}</td>
