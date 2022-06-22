@@ -11,6 +11,10 @@ def Register(run,nombres,apellidos,telefono,correo, contrasena, codDireccion, co
     response = map(list,query)
     return response
 
+def GenerarDireccion(calle, nCalle, codComuna):
+    query = db.engine.execute(text("call  `sp_insMod_direccion`('{calle}','{nCalle}','{codComuna}')".format(calle=calle,nCalle=nCalle,codComuna=codComuna)))
+    response = map(list,query)
+    return response
 
 
 '''
