@@ -1,6 +1,6 @@
 import json
 from flask import Blueprint, make_response, render_template, request, jsonify
-from models.cliente import RetornarHistorial, Register
+from models.cliente import RegistrarProvincia, RetornarHistorial, Register, RegistrarRegion,RegistrarProvincia
 from controllers.register import SelectPreguntas
 clientes = Blueprint('clientes', __name__)
 
@@ -21,7 +21,14 @@ def registrarse():
 @clientes.route("/clientes/registrarse/guardar", methods=['GET', 'POST'])
 def guardar_registro():
     data = request.form.to_dict()
-    nombres = data["txt_nombres"]
+    direccion = data['txt_direccion']
+    newDireccion = direccion.split(',')
+    newDireccion.pop()
+    region = newDireccion[-1]
+    RegistrarRegion('XVIII', region, 1)
+    RegistrarProvincia()
+    print('direccion: {}'.format(region))
+
     print(data)
     return make_response(data)
 

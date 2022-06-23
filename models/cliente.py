@@ -6,7 +6,17 @@ def RetornarHistorial(run):
     response = map(list,query)
     return response
 
+def RegistrarRegion(codRegion, nombreRegion, estado):
+    query = db.engine.execute(text("call  `sp_insMod_region`('{codRegion}','{nombreRegion}','{estado}')".format(codRegion=codRegion,nombreRegion=nombreRegion,estado=estado)))
+    response = map(list,query)
+    return response
+
+def RegistrarProvincia(codProvincia, nombreProvincia, codRegion, estado):
+    query = db.engine.execute(text("call  `sp_insMod_region`('{codProvincia}','{nombreProvincia}','{codRegion}','{estado}')".format(codProvincia=codProvincia,nombreProvincia=nombreProvincia, codRegion=codRegion,estado=estado)))
+    response = map(list,query)
+    return response
 def Register(run,nombres,apellidos,telefono,correo, contrasena, codDireccion, codRespuesta, fechaNacto, codPerfilCli):
+    
     query = db.engine.execute(text("call  `sp_insMod_cliente`('{run}','{nombres}','{apellidos}','{telefono}','{correo}','{contrasena}','{codDireccion}','{codRespuesta}','{fechaNacto}', '{codPerfilCli}')".format(run=run,nombre=nombres,apellido=apellidos, telefono = telefono,correo=correo,contrasena=contrasena,codDireccion=codDireccion,codRespuesta=codRespuesta,fechaNacto=fechaNacto,codPerfilCli=codPerfilCli)))
     response = map(list,query)
     return response
