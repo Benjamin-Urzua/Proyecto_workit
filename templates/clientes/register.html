@@ -16,7 +16,7 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src=" {{url_for('static', filename='lib/jquery.rut.js')  }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.rut@1.1.2/jquery.rut.js"></script>
     <title>Register</title>
 </head>
 
@@ -39,15 +39,21 @@
                             <input required type="password" minlength="8" class="form-control txt_contrasena1" name="txt_contrasena1" placeholder="********">
                             
 
-                            <label for="txt_correo1" class="form-label">Correo electrónico</label>
-                            <input required type="email" class="form-control txt_correo1" name="txt_correo1" placeholder="nombre@mail.com">
+                            <label for="txt_correo" class="form-label">Correo electrónico</label>
+                            <input required type="email" class="form-control txt_correo" name="txt_correo" placeholder="nombre@mail.com">
 
                             <label for="txt_run" class="form-label">Run</label>
                             <input required type="text" class="form-control" name="txt_run" id="txt_run"  placeholder="12.345.678-9">
 
-                            <label for="txt_comuna" class="form-label">Direccion completa</label>
-                            <input required type="text" class="form-control" name="txt_direccion" id="txt_direccion"
-                                placeholder="Calle 123, Ciudad, Region, Pais" />
+                            <label for="combo_region" class="form-label">Región</label>
+                            <select required class="form-select" name="combo_region"
+                                aria-label="Seleccione su región" id="combo_region">
+                            </select>
+
+                            <label for="combo_comuna" class="form-label">Comuna</label>
+                            <select required class="form-select" name="combo_comuna"
+                                aria-label="Seleccione su comuna" id="combo_comuna" disabled>
+                            </select>
 
                             <br />
                             <select required class="form-select" name="txt_preguntaseguridad"
@@ -66,9 +72,6 @@
                             <label for="txt_contrasena2" class="form-label">Confirme contraseña</label>
                             <input required type="password" class="form-control txt_contrasena2" name="txt_contrasena2" placeholder="********">
 
-                            <label for="txt_correo2" class="form-label">Confirme correo electrónico</label>
-                            <input required type="email" class="form-control txt_correo2" name="txt_correo2" placeholder="nombre@mail.com">
-
                             <label for="txt_telefono" class="form-label">Telefono</label>
                             <div class="input-group">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -80,9 +83,16 @@
                                     aria-label="Text input with dropdown button">
                             </div>
 
-
                             <label for="txt_fechanacto" class="form-label">Fecha de nacimiento</label>
                             <input required type="date" class="form-control " name="txt_fechanacto">
+
+                            <label for="combo_provincia" class="form-label">Provincia</label>
+                            <select required class="form-select" name="combo_provincia"
+                                aria-label="Seleccione su provincia" id="combo_provincia" disabled>
+                            </select>
+
+                            <label for="txt_direccion" class="form-label">Direccion</label>
+                            <input required type="text" class="form-control " name="txt_direccion" placeholder="Calle 123">
 
                             <br />
                             <input required type="text" class="form-control " name="txt_respuestaseguridad"

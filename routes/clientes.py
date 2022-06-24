@@ -1,7 +1,8 @@
-import json
+import json, requests
+from msilib.schema import Billboard
 from flask import Blueprint, make_response, render_template, request, jsonify
-from models.cliente import RegistrarProvincia, RetornarHistorial, Register, RegistrarRegion,RegistrarProvincia
-from controllers.register import SelectPreguntas
+from models.cliente import RegistrarComuna, RegistrarDireccion, RegistrarProvincia, RetornarHistorial, Register, RegistrarRegion,RegistrarProvincia
+from controllers.register import RetornarComuna, SelectPreguntas, RetornarRegion, RetornarProvincia
 clientes = Blueprint('clientes', __name__)
 
 @clientes.route("/clientes/leer")
@@ -21,16 +22,51 @@ def registrarse():
 @clientes.route("/clientes/registrarse/guardar", methods=['GET', 'POST'])
 def guardar_registro():
     data = request.form.to_dict()
-    direccion = data['txt_direccion']
-    newDireccion = direccion.split(',')
-    newDireccion.pop()
-    region = newDireccion[-1]
-    RegistrarRegion('XVIII', region, 1)
-    RegistrarProvincia()
-    print('direccion: {}'.format(region))
-
+    calleNum = data['txt_direccion'].split(' ')
+    nCalle = calleNum[-1]
+    calleNum.pop()
+    calle = '+'
+    calle = calle.join(calleNum)
+    
+    
+    codigoRegion = data['combo_region']
+    regionResponse = requests.get('https://apis.digital.gob.cl/dpa/regiones/{}'.format(codigoRegion), params=[('q', 'requests+language:python')], headers={"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"})
+    region = json.loads(regionResponse.text)
+    region = region["nombre"].replace(' ', '+')
+    
+    codigoProvincia = data['combo_provincia'].replace(' ', '+')
+    provinciaResponse = requests.get('https://apis.digital.gob.cl/dpa/provincias/{}'.format(codigoProvincia), params=[('q', 'requests+language:python')], headers={"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"})
+    provincia = json.loads(provinciaResponse.text)
+    provincia = provincia["nombre"].replace(' ', '+')
+    
+    codigoComuna = data['combo_comuna'].replace(' ', '+')
+    comunaResponse = requests.get('https://apis.digital.gob.cl/dpa/comunas/{}'.format(codigoComuna), params=[('q', 'requests+language:python')], headers={"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"})
+    comuna = json.loads(comunaResponse.text)
+    comuna = comuna["nombre"].replace(' ', '+')
+    
+    
+    mapsResponse = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address={}+{}+,+{}+,+{}+,+{}+,+Chile&key=AIzaSyBwOsP73t_qgFi88Wa374i--YZ1ExOLpqQ'.format(nCalle, calle, comuna, provincia, region))
+    maps = json.loads(mapsResponse.text)
+        
+    RegistrarRegion(region, 1)
+    
+    codRegion = list(RetornarRegion(region))[0][0]
+    RegistrarProvincia(provincia, codRegion, 1)
+    
+    codProvincia = list(RetornarProvincia(provincia))[0][0]
+    RegistrarComuna(comuna, codProvincia, 1)
+    
+    
+    region = region["nombre"].replace('+', ' ')
+    provincia = provincia["nombre"].replace('+', ' ')
+    comuna = comuna["nombre"].replace('+', ' ')
+    codComuna = list(RetornarComuna(comuna))[0][0]
+    lat = maps["results"][0]["geometry"]["location"]["lat"]
+    lng = maps["results"][0]["geometry"]["location"]["lng"]
+    RegistrarDireccion(calle,nCalle,lat,lng,codComuna, 1)
+    
     print(data)
-    return make_response(data)
+    return "200"
 
 '''
 @clientes.route("/clientes/resultadosRegistro", methods=['POST'])
