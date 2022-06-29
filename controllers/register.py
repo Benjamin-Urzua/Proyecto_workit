@@ -1,22 +1,21 @@
-from utils.db import db
+from utils.db import engine
 from sqlalchemy import text
 
+
 def SelectPreguntas():
-    query = db.engine.execute(text("SELECT * FROM `tb_preguntasseguridad`"))
-    response = map(list,query)
+    conexion = engine.raw_connection()
+    cursor = conexion.cursor()
+    cursor.execute('''SELECT * FROM `tb_preguntasseguridad`''')
+    response = map(list,cursor.fetchall())
+    cursor.close()
     return response
 
 def RetornarRegion(nombreRegion):
-    query = db.engine.execute(text("select codRegion from tb_region where nombreRegion = '{}';".format(nombreRegion)))
-    response = map(list,query)
+    conexion = engine.raw_connection()
+    cursor = conexion.cursor()
+    cursor.execute('''select codRegion from tb_region where nombreRegion = '{}';'''.format(nombreRegion))
+    response = map(list,cursor.fetchall())
+    cursor.close()
     return response
 
-def RetornarProvincia(nombreProvincia):
-    query = db.engine.execute(text("select codProvincia from tb_provincia where nombreProvincia = '{}';".format(nombreProvincia)))
-    response = map(list,query)
-    return response
 
-def RetornarComuna(nombreComuna):
-    query = db.engine.execute(text("select codComuna from tb_comuna where nombreComuna = '{}';".format(nombreComuna)))
-    response = map(list,query)
-    return response

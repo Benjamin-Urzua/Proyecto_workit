@@ -19,6 +19,10 @@ window.initMap = function () {
 };
 document.head.appendChild(script);
 */
+
+var validacionContrasena=true
+var validacionRun = false
+
 $('.txt_contrasena1').click(function () {
   $('.txt_contrasena1').removeClass(' border-danger')
   $('.txt_contrasena2').removeClass(' border-danger')
@@ -51,7 +55,7 @@ $(document).ready(function () {
       dataType:'JSON',
       success:function(regiones){
         $.each(regiones,function(i,region){
-          opciones+="<optioncodigo value='"+region.codigo+"'>"+region.nombre+"</option>";
+          opciones+="<option value='"+region.codigo+"'>"+region.nombre+"</option>";
         });
         $("#combo_region").html(opciones);
       }
@@ -115,7 +119,7 @@ $(document).ready(function () {
 
   $('#form_register').submit(function (e) {
     e.preventDefault()
-
+    
     if ($('.txt_contrasena1').val() == $('.txt_contrasena2').val() && validacionRun) {
       $.ajax({
         type: 'POST',

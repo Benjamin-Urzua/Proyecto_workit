@@ -1,35 +1,45 @@
-from utils.db import db
+from utils.db import engine
 from sqlalchemy import text
 
 def RetornarHistorial(run):
-    query = db.engine.execute(text("call  `sp_retornarHistorial`('{run}')".format(run=run)))
-    response = map(list,query)
+    try:
+        conexion = engine.raw_connection()
+        cursor = conexion.cursor()
+        cursor.execute('''call  `sp_retornar_historial`('{run}')'''.format(run=run))
+        response = map(list,cursor.fetchall())
+    except NameError as err:
+        print("Algo ha salido mal: {err}".format(err))
+    cursor.close()
     return response
 
-def RegistrarRegion( nombreRegion, estado):
-    query = db.engine.execute(text("call  `sp_insMod_region`('{nombreRegion}','{estado}')".format(nombreRegion=nombreRegion,estado=estado)))
-    response = map(list,query)
-    return response
-
-def RegistrarProvincia( nombreProvincia, codRegion, estado):
-    query = db.engine.execute(text("call  `sp_insMod_region`('{nombreProvincia}','{codRegion}','{estado}')".format(nombreProvincia=nombreProvincia, codRegion=codRegion,estado=estado)))
-    response = map(list,query)
-    return response
-
-def RegistrarComuna(nombreComuna, codProvincia, estado):
-    query = db.engine.execute(text("call  `sp_insMod_comuna`('{nombreComuna}','{codProvincia}','{estado}')".format(nombreComuna=nombreComuna, codProvincia=codProvincia,estado=estado)))
-    response = map(list,query)
-    return response
-
-def RegistrarDireccion(calle, nCalle, lat, lng, codComuna, estado):
-    query = db.engine.execute(text("call  `sp_insMod_direccion`('{calle}','{nCalle}','{lat}','{lng}','{codComuna},'{estado}'')".format(calle=calle, nCalle=nCalle,lat=lat, lng=lng, codComuna=codComuna, estado=estado)))
-    response = map(list,query)
+#def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng, codEstado):
+def RegistrarDireccion(nombreRegion, codEstado):
+    try:
+        conexion = engine.raw_connection()
+        cursor = conexion.cursor()
+        
+        cursor.execute('''call  `sp_ins_region`('{}','{}');'''.format(nombreRegion, codEstado))
+        
+        # cursor.execute('''call  `sp_generar_direccion`('{nombreRegion}','{nombreProvincia}','{nombreComuna}','{calle}','{nCalle}','{lat}','{lng}');'''.format(nombreRegion=nombreRegion, nombreProvincia=nombreProvincia, nombreComuna=nombreComuna, calle=calle, nCalle=nCalle, lat=lat, lng=lng))
+        response = map(list,cursor.fetchall())
+        for item in response:
+            print(item)
+    except NameError as err:
+        print("Algo ha salido mal: {err}".format(err))
+    cursor.close()
     return response
 
 def Register(run,nombres,apellidos,telefono,correo, contrasena, codDireccion, codRespuesta, fechaNacto, codPerfilCli):
-    query = db.engine.execute(text("call  `sp_insMod_cliente`('{run}','{nombres}','{apellidos}','{telefono}','{correo}','{contrasena}','{codDireccion}','{codRespuesta}','{fechaNacto}', '{codPerfilCli}')".format(run=run,nombre=nombres,apellido=apellidos, telefono = telefono,correo=correo,contrasena=contrasena,codDireccion=codDireccion,codRespuesta=codRespuesta,fechaNacto=fechaNacto,codPerfilCli=codPerfilCli)))
-    response = map(list,query)
+    try:
+        conexion = engine.raw_connection()
+        cursor = conexion.cursor()
+        cursor.execute('''call  `sp_insMod_cliente`('{run}','{nombres}','{apellidos}','{telefono}','{correo}','{contrasena}','{codDireccion}','{codRespuesta}','{fechaNacto}', '{codPerfilCli}')'''.format(run=run,nombre=nombres,apellido=apellidos, telefono = telefono,correo=correo,contrasena=contrasena,codDireccion=codDireccion,codRespuesta=codRespuesta,fechaNacto=fechaNacto,codPerfilCli=codPerfilCli))
+        response = map(list,cursor.fetchall())
+    except NameError as err:
+        print("Algo ha salido mal: {err}".format(err))
+    cursor.close()
     return response
+
 
 '''
 class Cliente(db.model):

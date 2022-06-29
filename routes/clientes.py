@@ -1,8 +1,9 @@
 import json, requests
 from msilib.schema import Billboard
 from flask import Blueprint, make_response, render_template, request, jsonify
-from models.cliente import RegistrarComuna, RegistrarDireccion, RegistrarProvincia, RetornarHistorial, Register, RegistrarRegion,RegistrarProvincia
-from controllers.register import RetornarComuna, SelectPreguntas, RetornarRegion, RetornarProvincia
+from models.cliente import  RegistrarDireccion,  RetornarHistorial, Register
+from controllers.register import  SelectPreguntas
+
 clientes = Blueprint('clientes', __name__)
 
 @clientes.route("/clientes/leer")
@@ -48,25 +49,16 @@ def guardar_registro():
     mapsResponse = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address={}+{}+,+{}+,+{}+,+{}+,+Chile&key=AIzaSyBwOsP73t_qgFi88Wa374i--YZ1ExOLpqQ'.format(nCalle, calle, comuna, provincia, region))
     maps = json.loads(mapsResponse.text)
         
-    RegistrarRegion(region, 1)
-    
-    codRegion = list(RetornarRegion(region))[0][0]
-    RegistrarProvincia(provincia, codRegion, 1)
-    
-    codProvincia = list(RetornarProvincia(provincia))[0][0]
-    RegistrarComuna(comuna, codProvincia, 1)
-    
-    
-    region = region["nombre"].replace('+', ' ')
-    provincia = provincia["nombre"].replace('+', ' ')
-    comuna = comuna["nombre"].replace('+', ' ')
-    codComuna = list(RetornarComuna(comuna))[0][0]
+    region = region.replace('+', ' ')
+    provincia = provincia.replace('+', ' ')
+    comuna = comuna.replace('+', ' ')
     lat = maps["results"][0]["geometry"]["location"]["lat"]
     lng = maps["results"][0]["geometry"]["location"]["lng"]
-    RegistrarDireccion(calle,nCalle,lat,lng,codComuna, 1)
     
-    print(data)
-    return "200"
+    
+    #RegistrarDireccion(region, provincia, comuna,calle, nCalle, lat, lng)
+    RegistrarDireccion(region, 1)
+    return "OK"
 
 '''
 @clientes.route("/clientes/resultadosRegistro", methods=['POST'])
