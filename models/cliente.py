@@ -1,3 +1,4 @@
+import code
 from utils.db import engine
 from sqlalchemy import text
 
@@ -12,21 +13,33 @@ def RetornarHistorial(run):
     cursor.close()
     return response
 
-#def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng, codEstado):
-def RegistrarDireccion(nombreRegion, codEstado):
+def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng):
+#def RegistrarDireccion(nombreRegion, codEstado):
+    conexion = engine.raw_connection()
     try:
-        conexion = engine.raw_connection()
         cursor = conexion.cursor()
-        
-        cursor.execute('''call  `sp_ins_region`('{}','{}');'''.format(nombreRegion, codEstado))
-        
-        # cursor.execute('''call  `sp_generar_direccion`('{nombreRegion}','{nombreProvincia}','{nombreComuna}','{calle}','{nCalle}','{lat}','{lng}');'''.format(nombreRegion=nombreRegion, nombreProvincia=nombreProvincia, nombreComuna=nombreComuna, calle=calle, nCalle=nCalle, lat=lat, lng=lng))
+        cursor.callproc('sp_generar_direccion', [nombreRegion, nombreProvincia, nombreComuna, calle, nCalle, lat, lng])
+        cursor.close()
+        conexion.commit()
         response = map(list,cursor.fetchall())
-        for item in response:
-            print(item)
     except NameError as err:
         print("Algo ha salido mal: {err}".format(err))
-    cursor.close()
+    finally:
+        conexion.close()
+    return response
+
+def RegistrarRespuestaSeguridad(codPregunta, respuesta):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_ins_respuestaSeguridad', [codPregunta, respuesta])
+        cursor.close()
+        conexion.commit()
+        response = map(list,cursor.fetchall())
+    except NameError as err:
+        print("Algo ha salido mal: {err}".format(err))
+    finally:
+        conexion.close()
     return response
 
 def Register(run,nombres,apellidos,telefono,correo, contrasena, codDireccion, codRespuesta, fechaNacto, codPerfilCli):

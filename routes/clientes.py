@@ -1,7 +1,7 @@
 import json, requests
 from msilib.schema import Billboard
 from flask import Blueprint, make_response, render_template, request, jsonify
-from models.cliente import  RegistrarDireccion,  RetornarHistorial, Register
+from models.cliente import  RegistrarDireccion, RegistrarRespuestaSeguridad,  RetornarHistorial, Register
 from controllers.register import  SelectPreguntas
 
 clientes = Blueprint('clientes', __name__)
@@ -54,10 +54,14 @@ def guardar_registro():
     comuna = comuna.replace('+', ' ')
     lat = maps["results"][0]["geometry"]["location"]["lat"]
     lng = maps["results"][0]["geometry"]["location"]["lng"]
-    
-    
-    #RegistrarDireccion(region, provincia, comuna,calle, nCalle, lat, lng)
-    RegistrarDireccion(region, 1)
+        
+    RegistrarDireccion(region, provincia, comuna,calle, nCalle, lat, lng)
+
+    codPregunta = data['txt_preguntaseguridad']
+    respuestaSeguridad = data['txt_respuestaseguridad']
+
+    RegistrarRespuestaSeguridad(codPregunta, respuestaSeguridad)
+    #RegistrarDireccion(region, 1)
     return "OK"
 
 '''
