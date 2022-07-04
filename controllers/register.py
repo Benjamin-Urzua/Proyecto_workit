@@ -4,18 +4,30 @@ from sqlalchemy import text
 
 def SelectPreguntas():
     conexion = engine.raw_connection()
-    cursor = conexion.cursor()
-    cursor.execute('''SELECT * FROM `tb_preguntasseguridad`''')
-    response = map(list,cursor.fetchall())
-    cursor.close()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute('''SELECT * FROM `tb_preguntasseguridad`''')
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
     return response
 
 def RetornarRegion(nombreRegion):
     conexion = engine.raw_connection()
-    cursor = conexion.cursor()
-    cursor.execute('''select codRegion from tb_region where nombreRegion = '{}';'''.format(nombreRegion))
-    response = map(list,cursor.fetchall())
-    cursor.close()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute('''select codRegion from tb_region where nombreRegion = '{}';'''.format(nombreRegion))
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
     return response
 
 

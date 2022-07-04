@@ -1,28 +1,29 @@
-import code
 from utils.db import engine
 from sqlalchemy import text
 
 def RetornarHistorial(run):
-    try:
-        conexion = engine.raw_connection()
-        cursor = conexion.cursor()
-        cursor.execute('''call  `sp_retornar_historial`('{run}')'''.format(run=run))
-        response = map(list,cursor.fetchall())
-    except NameError as err:
-        print("Algo ha salido mal: {err}".format(err))
-    cursor.close()
-    return response
-
-def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng):
-#def RegistrarDireccion(nombreRegion, codEstado):
     conexion = engine.raw_connection()
     try:
         cursor = conexion.cursor()
-        cursor.callproc('sp_generar_direccion', [nombreRegion, nombreProvincia, nombreComuna, calle, nCalle, lat, lng])
+        cursor.callproc('sp_retornar_historial', [run])
+        response = map(list,cursor.fetchall())
         cursor.close()
         conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {err}".format(err))
+    finally:
+        conexion.close()
+    return list(response)
+
+def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_generar_direccion', [nombreRegion, nombreProvincia, nombreComuna, calle, nCalle, lat, lng])        
         response = map(list,cursor.fetchall())
-    except NameError as err:
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
         print("Algo ha salido mal: {err}".format(err))
     finally:
         conexion.close()
@@ -32,27 +33,71 @@ def RegistrarRespuestaSeguridad(codPregunta, respuesta):
     conexion = engine.raw_connection()
     try:
         cursor = conexion.cursor()
-        cursor.callproc('sp_ins_respuestaSeguridad', [codPregunta, respuesta])
+        cursor.callproc('sp_generar_preguntaRespuesta', [codPregunta, respuesta])        
+        response = map(list,cursor.fetchall())
         cursor.close()
         conexion.commit()
-        response = map(list,cursor.fetchall())
-    except NameError as err:
+    except Exception as err:
         print("Algo ha salido mal: {err}".format(err))
     finally:
         conexion.close()
     return response
 
-def Register(run,nombres,apellidos,telefono,correo, contrasena, codDireccion, codRespuesta, fechaNacto, codPerfilCli):
+def RegistrarPerfilCliente():
+    conexion = engine.raw_connection()
     try:
-        conexion = engine.raw_connection()
         cursor = conexion.cursor()
-        cursor.execute('''call  `sp_insMod_cliente`('{run}','{nombres}','{apellidos}','{telefono}','{correo}','{contrasena}','{codDireccion}','{codRespuesta}','{fechaNacto}', '{codPerfilCli}')'''.format(run=run,nombre=nombres,apellido=apellidos, telefono = telefono,correo=correo,contrasena=contrasena,codDireccion=codDireccion,codRespuesta=codRespuesta,fechaNacto=fechaNacto,codPerfilCli=codPerfilCli))
+        cursor.callproc('sp_ins_perfilcliente', ["", ""])        
         response = map(list,cursor.fetchall())
-    except NameError as err:
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
         print("Algo ha salido mal: {err}".format(err))
-    cursor.close()
+    finally:
+        conexion.close()
     return response
 
+def RegistrarCliente(run,nombres,apellidos,telefono,correo, contrasena, fechaNacto):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_ins_cliente', [run, nombres, apellidos, telefono, correo, contrasena, fechaNacto])
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {err}".format(err))
+    finally:
+        conexion.close()
+    return list(response)[0]
+
+def AutentificarCliente(correo, contrasena):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_autentificar_cliente', [correo, contrasena])
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+    return list(response)[0]
+
+def EliminarCuenta(run):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_eliminarCliente', [run])
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+    return list(response)[0]
 
 '''
 class Cliente(db.model):

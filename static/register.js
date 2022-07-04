@@ -1,37 +1,16 @@
-/*var script = document.createElement('script');
-var near_place;
-script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDM-j--qFSEiW1KzVtL_3kMZo9gh4cGXr8&libraries=places&callback=initMap';
-script.async = true;
-var validacionContrasena = true
-var validacionCorreo = true
-var validacionRun = false
-
-
-window.initMap = function () {
-  var autocompletadoMaps;
-  autocompletadoMaps = new google.maps.places.Autocomplete((document.getElementById('txt_direccion')), {
-    types: ['geocode'],
-  });
-
-  google.maps.event.addListener(autocompletadoMaps, 'place_changed', function () {
-    near_place = autocompletadoMaps.getPlace();
-  });
-};
-document.head.appendChild(script);
-*/
-
 var validacionContrasena=true
 var validacionRun = false
 
-$('.txt_contrasena1').click(function () {
-  $('.txt_contrasena1').removeClass(' border-danger')
-  $('.txt_contrasena2').removeClass(' border-danger')
-})
 
 
 $(document).ready(function () {
   cargarRegion();
-
+  $('#loader').hide()
+  
+  $('.txt_contrasena1').click(function () {
+    $('.txt_contrasena1').removeClass(' border-danger')
+    $('.txt_contrasena2').removeClass(' border-danger')
+  })
   $("#combo_region").change(function(){
     if($(this).val() != ''){
       $( "#combo_provincia" ).prop( "disabled", false );
@@ -119,6 +98,7 @@ $(document).ready(function () {
 
   $('#form_register').submit(function (e) {
     e.preventDefault()
+    e.stopImmediatePropagation();
     
     if ($('.txt_contrasena1').val() == $('.txt_contrasena2').val() && validacionRun) {
       $.ajax({
@@ -126,11 +106,22 @@ $(document).ready(function () {
         url: "/clientes/registrarse/guardar",
         data: $(this).serialize(),
         datatype: 'json',
-        success: function (result) {
-          console.log("result:", result);
-        },
+        beforeSend: function() {
+          $('#loader').show();
+       },
+       success:function (url ) {  
+        $('#msjLoader').html('¡Registrado correctamente!').append('<h5 class="text-primary">Redirigiendo...</h5>')
+        setTimeout(function(){
+          $('#loader').hide();
+          window.location.href = url
+        }, 2000)
+        
+       },
         error: function (err) {
-          console.log("error: ", err);
+          $('#msjLoader').html('Algo ha salido mal...').append('<h5 class="text-primary">Vuelva a intentarlo</h5>')
+          setTimeout(function(){
+            $('#loader').hide();
+          }, 2000)
         }
       });
     } else {

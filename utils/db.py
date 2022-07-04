@@ -1,6 +1,10 @@
 from sqlalchemy import create_engine
 
-engine = create_engine('mysql://root@localhost:3306/proyecto2.1')
+try:
+    engine = create_engine('mysql://root@localhost:3306/proyecto2.1')
+except Exception as err:
+    print(err)
+
 '''
 from flask_sqlalchemy import SQLAlchemy
 

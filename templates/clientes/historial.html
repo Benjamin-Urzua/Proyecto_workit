@@ -17,8 +17,27 @@
 </head>
 
 <body>
-  <h1>Historial:</h1>
+
   <div class="container">
+    {% if code == -1 %}
+    <div class="modal  d-block"  id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Vaya...</h5>
+          </div>
+          <div class="modal-body">
+           {{msj}}
+          </div>
+          <div class="modal-footer">
+            <a type="button" class="btn btn-primary" href="{{ url_for('clientes.home') }}" data-dismiss="modal">Aceptar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <h1>Historial:</h1>
     <table class="table">
       <!-- Table headers -->
       <th>
@@ -33,10 +52,10 @@
         </tr>
       </th>
 
-      {%for items in historial%}
+      {%for filas in historial%}
       <tr>
-        {%for item in items%}
-        {%if item == run%}
+        {%for item in filas%}
+        {%if item == session['username']%}
         {%else%}
         <td class="text-center align-middle">{{item}}</td>
         {% endif %}
@@ -44,6 +63,8 @@
       </tr>
       {%endfor%}
     </table>
+    {% endif %}
+
   </div>
 </body>
 
