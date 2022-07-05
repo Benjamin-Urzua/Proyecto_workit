@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 
 try:
-    engine = create_engine('mysql://root@localhost:3306/proyecto2.1')
+    engine = create_engine('mysql://root:root@localhost:3306/proyecto2.2')
 except Exception as err:
     print(err)
 

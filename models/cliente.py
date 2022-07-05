@@ -10,10 +10,10 @@ def RetornarHistorial(run):
         cursor.close()
         conexion.commit()
     except Exception as err:
-        print("Algo ha salido mal: {err}".format(err))
+        print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return list(response)
+        return list(response)
 
 def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng):
     conexion = engine.raw_connection()
@@ -24,10 +24,10 @@ def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle
         cursor.close()
         conexion.commit()
     except Exception as err:
-        print("Algo ha salido mal: {err}".format(err))
+        print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return response
+        return response
 
 def RegistrarRespuestaSeguridad(codPregunta, respuesta):
     conexion = engine.raw_connection()
@@ -38,10 +38,10 @@ def RegistrarRespuestaSeguridad(codPregunta, respuesta):
         cursor.close()
         conexion.commit()
     except Exception as err:
-        print("Algo ha salido mal: {err}".format(err))
+        print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return response
+        return response
 
 def RegistrarPerfilCliente():
     conexion = engine.raw_connection()
@@ -52,10 +52,10 @@ def RegistrarPerfilCliente():
         cursor.close()
         conexion.commit()
     except Exception as err:
-        print("Algo ha salido mal: {err}".format(err))
+        print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return response
+        return response
 
 def RegistrarCliente(run,nombres,apellidos,telefono,correo, contrasena, fechaNacto):
     conexion = engine.raw_connection()
@@ -66,10 +66,10 @@ def RegistrarCliente(run,nombres,apellidos,telefono,correo, contrasena, fechaNac
         cursor.close()
         conexion.commit()
     except Exception as err:
-        print("Algo ha salido mal: {err}".format(err))
+        print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return list(response)[0]
+        return list(response)
 
 def AutentificarCliente(correo, contrasena):
     conexion = engine.raw_connection()
@@ -83,7 +83,7 @@ def AutentificarCliente(correo, contrasena):
         print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return list(response)[0]
+        return list(response)[0]
 
 def EliminarCuenta(run):
     conexion = engine.raw_connection()
@@ -97,7 +97,7 @@ def EliminarCuenta(run):
         print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return list(response)[0]
+        return list(response)[0] 
 
 '''
 class Cliente(db.model):

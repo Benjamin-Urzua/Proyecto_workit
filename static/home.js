@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () { //Mandar otro mensaje para confirmar
     $('#loader').hide()
     $('#btn_eliminarCuenta').click(function(){
         $('.modal-dialog').show()
