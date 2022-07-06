@@ -99,6 +99,20 @@ def EliminarCuenta(run):
         conexion.close()
         return list(response)[0] 
 
+def ActualizarPerfil(run, descripcion, fotoPerfil):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_update_perfilCliente', [run, descripcion, fotoPerfil])
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+        return list(response)[0] 
+
 '''
 class Cliente(db.model):
     __tablename__="tb_cliente"

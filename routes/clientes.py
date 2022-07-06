@@ -3,7 +3,7 @@ from datetime import datetime
 from msilib.schema import Billboard
 from flask import Blueprint, make_response, render_template, request, jsonify, url_for, redirect, session
 from controllers.home import RetornarPerfilCliente
-from models.cliente import  AutentificarCliente, EliminarCuenta, RegistrarCliente, RegistrarDireccion, RegistrarPerfilCliente, RegistrarRespuestaSeguridad,  RetornarHistorial
+from models.cliente import  ActualizarPerfil, AutentificarCliente, EliminarCuenta, RegistrarCliente, RegistrarDireccion, RegistrarPerfilCliente, RegistrarRespuestaSeguridad,  RetornarHistorial
 from controllers.register import  SelectPreguntas
 
 clientes = Blueprint('clientes', __name__)
@@ -19,14 +19,22 @@ def home():
     
 @clientes.route("/clientes/perfil" , methods=['GET', 'POST'])
 def perfil():
-    if request.method == 'GET':
-        if 'username' in session:
-            username = session['username']
+    if 'username' in session:
+        username = session['username']
+        if request.method == 'GET':
             perfil = RetornarPerfilCliente(username)[0]
             print(perfil)
             return render_template('/clientes/perfil.html', perfil = perfil)
-    else:
-        return 'a'
+        elif request.method == 'POST':
+            data = request.json
+            fotoPerfil = data["SendInfo"][0]
+            descripcion = data["SendInfo"][1]
+            retorno = ActualizarPerfil(username, descripcion, fotoPerfil)
+            if len(retorno) > 0:
+                return "Perfil Actualizado Exitosamente"
+            else:
+                return "Algo falló. Su perfil no se ha actualizado"
+   
 
 @clientes.route("/clientes/logout", methods=['POST', 'GET'])
 def logout():
