@@ -1,5 +1,7 @@
 from flask import Flask
+from routes.especialistas import especialistas
 from routes.clientes import clientes
+from routes.home import index
 #from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -12,6 +14,8 @@ app.secret_key = 'my_secret_key'
 
 #db = SQLAlchemy(app)
 
+app.register_blueprint(index)
+app.register_blueprint(especialistas)
 app.register_blueprint(clientes)
 
 

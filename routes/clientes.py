@@ -7,15 +7,6 @@ from models.cliente import  ActualizarPerfil, AutentificarCliente, EliminarCuent
 from controllers.register import  SelectPreguntas
 
 clientes = Blueprint('clientes', __name__)
-
-@clientes.route("/clientes" , methods=['GET', 'POST'])
-def home():
-    if 'username' in session:
-        username = session['username']
-        
-        return render_template('/clientes/home.html', username = username)
-    else:
-        return render_template('/clientes/home.html')
     
 @clientes.route("/clientes/perfil" , methods=['GET', 'POST'])
 def perfil():
@@ -41,11 +32,14 @@ def logout():
     if 'username' in session:
         session.pop('username')
         msj = "Sesion cerrada"
-    return render_template('/clientes/home.html', msj = msj)
+    return render_template('home.html', msj = msj)
 
 @clientes.route("/clientes/login", methods=['POST', 'GET'])
 def login():
-    return render_template('clientes/login.html')
+    if 'username' in session:
+        return redirect(url_for('index.home'))
+    else:
+        return render_template('clientes/login.html')
   
 @clientes.route("/clientes/login/autentificacion", methods=['GET', 'POST'])
 def autentificar():
@@ -58,7 +52,7 @@ def autentificar():
             retorno = {
                 "Msj": "Sesión iniciada correctamente",
                 "Codigo": 1,
-                "Redirect": "/clientes" 
+                "Redirect": "/" 
             }
         else:
             retorno = {
@@ -70,7 +64,12 @@ def autentificar():
             print("Algo ha salido mal: {}".format(err))
     finally:
         return retorno
-        #return print(AutentificarCliente(data['txt_correo', data['txt_contrasena']]))    
+        #return print(AutentificarCliente(data['txt_correo', data['txt_contrasena']]))
+    '''
+    else: 
+        retorno = {"Codigo":3, "Msj":"Ya existe una sesión abierta.", "Redirect": "/"}
+        return retorno
+    '''    
 
 @clientes.route("/clientes/historial")
 def retornar_historial():
@@ -84,7 +83,7 @@ def retornar_historial():
         else:
             return render_template("clientes/historial.html", historial = historial, run = run, code = 1)
     else:
-        return redirect(url_for('clientes.home'))
+        return redirect(url_for('index.home'))
     
 
 @clientes.route("/clientes/registrarse", methods=['POST', 'GET'])
@@ -145,11 +144,7 @@ def guardar_registro():
     except Exception as err:
             print("Algo ha salido mal: {}".format(err))
     finally:
-        return '/clientes'
-
-@clientes.route("/clientes/actualizar")
-def actualizar():
-    return render_template('actualizar.html')
+        return '/'
 
 @clientes.route("/clientes/eliminarCuenta" ,methods=['GET', 'POST'])
 def eliminar():
@@ -168,7 +163,7 @@ def eliminar():
                     retorno =  {
                         "Msj": "Su cuenta se ha borrado",
                         "Codigo": 1,
-                        "Redirect": "/clientes" 
+                        "Redirect": "/" 
                     }
                 else:
                     retorno =  {
