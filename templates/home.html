@@ -18,7 +18,7 @@
 
 <body>
   <div class="container">
-    <div id="loader" style="text-align:center; z-index:3; background: rgba(255,255,255,0.5); backdrop-filter: blur(2px); margin: auto; position:absolute; width:100%; height:100%">
+    <div id="loader" style="text-align:center; z-index:10; background: rgba(255,255,255,0.5); backdrop-filter: blur(2px); margin: auto; position:absolute; width:100%; height:100%">
       <div style="position: relative;top:30%">
           <img class="mx-auto d-block" src="https://res.cloudinary.com/dyqehknhi/image/upload/v1656642829/2b777a13d2df20a20342e24b1fef7ff7_poxrdl.gif" alt="" style="max-width: 10%; height: auto; ">
           <h5 id="msjLoader" class="text-primary" >Procesando...</h5>
@@ -43,6 +43,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Iniciar sesión como especialista</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/clientes/historial">Ver historial de trabajos</a>
+            </li>
             {% if username: %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +66,7 @@
         </div>
       </nav>
       <form id="form_eliminarCuenta" method="post">
-      <div id="modal" class="modal fade" tabindex="-1">
+      <div id="modal" class="modal fade" tabindex="20">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">

@@ -18,6 +18,7 @@ $(document).ready(function () { //Mandar otro mensaje para confirmar
                     $('#loader').show();
                 },
                 success: function (result) {
+                    $("#modal").hide()
                     if (result["Codigo"] == 1) {
                         $('#msjLoader').html(""+result["Msj"]).append('<h5 class="text-primary">Redirigiendo...</h5>')
                         setTimeout(function () {

@@ -49,6 +49,7 @@ def autentificar():
         retorno = {}
         if authResult[1] == 1:
             session['username'] = authResult[2]
+            session['rol'] = 'cliente'
             retorno = {
                 "Msj": "Sesión iniciada correctamente",
                 "Codigo": 1,
@@ -73,7 +74,7 @@ def autentificar():
 
 @clientes.route("/clientes/historial")
 def retornar_historial():
-    if 'username' in session:
+    if 'username' in session and session['rol'] == 'cliente':
         run = session['username']
         historial = RetornarHistorial(run)
         if historial[0][1] == -1:

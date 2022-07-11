@@ -16,6 +16,20 @@ def SelectPreguntas():
         conexion.close()
     return response
 
+def SelectRubro():
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute('''SELECT codRubro, nombreRubro FROM `tb_rubro`''')
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+    return list(response)
+
 def RetornarRegion(nombreRegion):
     conexion = engine.raw_connection()
     try:

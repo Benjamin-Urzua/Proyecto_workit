@@ -1,0 +1,23 @@
+El proyecto cuenta actualmente con las siguientes funcionalidades:
+
+Registro de cliente
+
+Inicio de sesión de cliente: Solo se inicia la sesión si el estado del cliente es habilitado
+
+Editar perfil del cliente: De momento solo se puede editar su foto de perfil y una pequeña descripcion de
+el, pero se tiene previsto implementar mas ajustes de ese estilo
+
+Eliminar cuenta del cliente: Se le permite eliminar su cuenta al cliente, pero para eso se le validan
+sus credenciales. (Se preveen mejoras para esta funcionalidad)
+
+Listar historial de trabajos: Solo se puede acceder a esta vista si el cliente esta logueado. De igual
+forma que quien puede acceder a esta vista es solo el cliente, se prevee que el historial del especialista
+tenga otras caracteristicas. Solo se mostrará el historial si efectivamente existen trabajos hechos, de
+lo contrario se mostrara un mensaje manifestando la ausencia de estos. (Actualmente, en la base de datos,
+el unico cliente que tiene trabajos en su historial es [email:gerar@gmail.com, contraseña: contrasena1])
+
+Registro de especialista: Hasta ahora el formulario esta completo, sin embargo no está capturando los 
+documentos solicitados. (se preveen mejoras en su funcionalidad)
+
+Le adjuntamos el script de bd: proyecto2_1.sql
+Le adjuntamos la carpeta Workitdl con maquetas en proceso del proyecto
