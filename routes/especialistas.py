@@ -14,8 +14,11 @@ def registrarse():
 @especialistas.route("/especialistas/registrarse/guardar", methods=['GET', 'POST'])
 def guardar_registro():
     try:
-        response = request.form.to_dict
-        print(response)
+        response = request.form.to_dict()
+        images = request.files.to_dict()
+        
+        #response.update(images)
+        print('images: {} '.format(images["images"]))
     except Exception as err:
         print("Algo ha salido mal: {}".format(err))
     finally:

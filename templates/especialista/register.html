@@ -44,7 +44,7 @@
             </div>
 
             <div class="col-md-6 offset-sm-3 offset-xs-3 mt-5 offset-lg-0">
-                <form id="form_register" method="post">
+                <form id="form_register" method="post" enctype="multipart/form-data">
                     <div id="form_paso1">
                         <div class="row">
                             <h5>Paso 1</h5>
@@ -108,11 +108,12 @@
                             <h5>Paso 2</h5>
                             <div style="padding:1px" class="divider mb-2 bg-primary"></div>
                             <div class="col-md-6">
-                                
-
                                 <label for="img_cedula" class="form-label">Cédula de identidad</label>
                                 <input required name="img_cedula" id="img_cedula"type="file" class="file"  accept=".jpg, .jpeg, .png"data-show-upload="false" data-show-caption="true"  data-show-remove="false" data-show-preview="false">
-                                
+
+                                <label for="img_titProfesional" class="form-label">Titulo profesional</label>
+                                <input required name="img_titProfesional" id="img_titProfesional" type="file" accept=".jpg, .jpeg, .png" class="file" data-show-upload="false" data-show-caption="true"  data-show-remove="false" data-show-preview="false">
+                            
                                 <label for="txt_rubro" class="form-label">Rubro</label>
                                 <select required class="form-select" name="txt_rubro" aria-label="Seleccione su rubro">
                                     <option selected>Seleccione su rubro</option>
@@ -120,21 +121,18 @@
                                     <option value='"{{ rubro[0] }}"'>{{ rubro[1] }}</option>
                                     {% endfor %}
                                 </select>
-
-                                <label for="img_titProfesional" class="form-label">Titulo profesional</label>
-                                <input required name="img_titProfesional" id="img_titProfesional" type="file" accept=".jpg, .jpeg, .png" class="file" data-show-upload="false" data-show-caption="true"  data-show-remove="false" data-show-preview="false">
                             </div>
-                            <div class="col-md-6">
+                        <!--<div class="col-md-6">
                                 
                                 <label for="img_certResidencia" class="form-label">Certificado de residencia</label>
                                 <input required name="img_certResidencia" id="img_certResidencia" type="file" accept=".jpg, .jpeg, .png" class="file" data-show-upload="false" data-show-caption="true"  data-show-remove="false" data-show-preview="false">
-
-                                <label for="txt_profesion" class="form-label">Especifique su profesión</label>
-                                <input required type="text" class="form-control" id="txt_profesion" name="txt_profesion" placeholder="Ej: Albañil">
                                 
                                 <label for="img_certAntecedentes" class="form-label">Certificado de antecedentes</label>
                                 <input required name="img_certAntecedentes" id="img_certAntecedentes" type="file" accept=".jpg, .jpeg, .png" data-show-upload="false" data-show-remove="false" data-show-caption="true" class="file" data-show-preview="false">
-                            </div>
+                            
+                                <label for="txt_profesion" class="form-label">Especifique su profesión</label>
+                                <input required type="text" class="form-control" id="txt_profesion" name="txt_profesion" placeholder="Ej: Albañil">
+                            </div>-->
                         </div>
                     </div>
                     <div class="div_submit mt-4">

@@ -35,6 +35,8 @@ $(document).ready(function () {
     var opciones = "<option value='' selected>Seleccione una región</option>"
 
     $.ajax({
+      
+      type:'GET',
       url: 'https://apis.digital.gob.cl/dpa/regiones',
       dataType: 'JSON',
       success: function (regiones) {
@@ -50,6 +52,7 @@ $(document).ready(function () {
     var opciones = "<option value='' selected>Seleccione una provincia</option>"
 
     $.ajax({
+      type:'GET',
       url: `https://apis.digital.gob.cl/dpa/regiones/${$('#combo_region').val()}/provincias`,
       dataType: 'JSON',
       success: function (provincias) {
@@ -143,16 +146,22 @@ $(document).ready(function () {
   $('#form_register').submit(function (e) {
     e.preventDefault()
     e.stopImmediatePropagation();
-    
-    var form = new FormData($(this)[0])
+    var form2 = new FormData(this);
+
+    /*
+    var fd = document.getElementById("form_register")  
+   
     //form.append('form', $(this)[0])
     console.log('form: ', form)
-
+   */
     $.ajax({
       type: 'POST',
       url: "/especialistas/registrarse/guardar",
-      data: form,
-      datatype: 'json',
+      data: form2,
+      dataType: 'json',
+      cache:false,
+      contentType:false,
+      processData:false,
       beforeSend: function () {
         $('#loader').show();
       },
@@ -177,8 +186,5 @@ $(document).ready(function () {
 
   })
 
-  $("#btn_submit").click(function(){
-    console.log("img_certAntecedentes: ", $("#img_certAntecedentes").prop('files'))
-  })
 
 })
