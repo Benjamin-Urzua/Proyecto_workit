@@ -3,8 +3,8 @@ from datetime import datetime
 from msilib.schema import Billboard
 from flask import Blueprint, make_response, render_template, request, jsonify, url_for, redirect, session
 from controllers.home import RetornarPerfilCliente
-from models.cliente import  ActualizarPerfil, AutentificarCliente, EliminarCuenta, RegistrarCliente, RegistrarDireccion, RegistrarPerfilCliente, RegistrarRespuestaSeguridad,  RetornarHistorial
-from controllers.register import  SelectPreguntas
+from models.cliente import  ActualizarPerfil, AutentificarCliente, EliminarCuenta, RegistrarCliente,  RegistrarPerfilCliente, RegistrarRespuestaSeguridad,  RetornarHistorial
+from controllers.register import  RegistrarDireccion, SelectPreguntas
 
 clientes = Blueprint('clientes', __name__)
     
@@ -31,8 +31,9 @@ def perfil():
 def logout():
     if 'username' in session:
         session.pop('username')
-        msj = "Sesion cerrada"
-    return render_template('home.html', msj = msj)
+        session.pop('rol')
+        session['sesion'] = False
+    return redirect(url_for('index.home'))
 
 @clientes.route("/clientes/login", methods=['POST', 'GET'])
 def login():
@@ -50,6 +51,7 @@ def autentificar():
         if authResult[1] == 1:
             session['username'] = authResult[2]
             session['rol'] = 'cliente'
+            session['sesion'] = True
             retorno = {
                 "Msj": "Sesión iniciada correctamente",
                 "Codigo": 1,

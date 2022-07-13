@@ -5,7 +5,7 @@ $(document).ready(function () {
         e.stopImmediatePropagation();
         $.ajax({
             type: 'POST',
-            url: "/clientes/login/autentificacion",
+            url: "/especialistas/login/autentificacion",
             data: $(this).serialize(),
             datatype: 'json',
             beforeSend: function () {

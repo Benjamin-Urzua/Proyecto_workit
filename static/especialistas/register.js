@@ -147,18 +147,11 @@ $(document).ready(function () {
     e.preventDefault()
     e.stopImmediatePropagation();
     var form2 = new FormData(this);
-
-    /*
-    var fd = document.getElementById("form_register")  
-   
-    //form.append('form', $(this)[0])
-    console.log('form: ', form)
-   */
     $.ajax({
       type: 'POST',
       url: "/especialistas/registrarse/guardar",
       data: form2,
-      dataType: 'json',
+      datatype: 'json',
       cache:false,
       contentType:false,
       processData:false,
@@ -166,6 +159,7 @@ $(document).ready(function () {
         $('#loader').show();
       },
       success: function (url) {
+        console.log('url: ', url)
         $('#msjLoader').html('¡Registrado correctamente!').append('<h5 class="text-primary">Redirigiendo...</h5>')
         setTimeout(function () {
           $('#loader').hide();
@@ -174,17 +168,12 @@ $(document).ready(function () {
 
       },
       error: function (err) {
+        console.log('err: ', err)
         $('#msjLoader').html('Algo ha salido mal...').append('<h5 class="text-primary">Vuelva a intentarlo</h5>')
         setTimeout(function () {
           $('#loader').hide();
         }, 2000)
       }
     });
-
-
-
-
   })
-
-
 })

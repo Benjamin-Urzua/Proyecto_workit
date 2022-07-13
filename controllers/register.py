@@ -44,4 +44,17 @@ def RetornarRegion(nombreRegion):
         conexion.close()
     return response
 
+def RegistrarDireccion(nombreRegion, nombreProvincia, nombreComuna,calle, nCalle, lat, lng):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_generar_direccion', [nombreRegion, nombreProvincia, nombreComuna, calle, nCalle, lat, lng])        
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+        return response
 

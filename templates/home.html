@@ -41,26 +41,33 @@
               <a class="nav-link" href="/clientes/login">Iniciar sesión como cliente</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Iniciar sesión como especialista</a>
+              <a class="nav-link" href="/especialistas/login">Iniciar sesión como especialista</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/clientes/historial">Ver historial de trabajos</a>
             </li>
-            {% if username: %}
+            {% if session['sesion'] and session['rol'] == "cliente": %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Opciones de cuenta
               </a>
               <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/clientes/perfil">Modificar perfil</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('clientes.logout') }}">Cerrar sesion</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('clientes.logout') }}" onclick="alert('Sesión cerrada exitosamente')">Cerrar sesion</a></li>
                 <li id="btn_eliminarCuenta"><a  class="dropdown-item  text-white" data-bs-toggle="modal" data-bs-target="#modal"  href="#"><span class="text-danger">Eliminar cuenta <i class="bi bi-exclamation-triangle-fill"></i></span></a></li>
               </ul>
             </li>
-            {% endif %}
-
-            {% if msj: %}
-            <script>alert("{{ msj }}")</script>
+            {% elif  session['sesion'] and session['rol'] == "especialista":  %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Opciones de cuenta
+              </a>
+              <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/especialistas/perfil">Modificar perfil</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('especialistas.logout') }}" onclick="alert('Sesión cerrada exitosamente')">Cerrar sesion</a></li>
+                <li id="btn_eliminarCuenta"><a  class="dropdown-item  text-white" data-bs-toggle="modal" data-bs-target="#modal"  href="#"><span class="text-danger">Eliminar cuenta <i class="bi bi-exclamation-triangle-fill"></i></span></a></li>
+              </ul>
+            </li>
             {% endif %}
           </ul>
         </div>

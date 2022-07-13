@@ -43,7 +43,7 @@ $(document).ready(function(){
         console.log(SendInfo)
         $.ajax({
            type: 'post',
-            url: '/clientes/perfil',
+            url: '/especialistas/perfil',
             data: JSON.stringify(SendInfo),
             contentType: "application/json; charset=utf-8",
             traditional: true,

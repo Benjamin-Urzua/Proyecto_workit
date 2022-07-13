@@ -13,3 +13,17 @@ def RetornarPerfilCliente(run):
     finally:
         conexion.close()
     return list(response)
+
+def RetornarPerfilEspecialista(run):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_retornar_perfilEspecialista', [run])
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+    return list(response)
