@@ -1,6 +1,5 @@
 from dataclasses import fields
 import json, requests
-import numpy as np
 from werkzeug.datastructures import FileStorage
 from flask import Blueprint, make_response, render_template, request, jsonify, url_for, redirect, session
 from sqlalchemy.dialects.mysql import BLOB as blob
@@ -129,8 +128,7 @@ def perfil():
         if request.method == 'GET':
             perfil = RetornarPerfilEspecialista(username)[0]
             print(perfil)
-            return str(perfil)
-            #return render_template('/especialistas/perfil.html', perfil = perfil)
+            return render_template('/especialistas/perfil.html')
         elif request.method == 'POST':
             data = request.json
             fotoPerfil = data["SendInfo"][0]
