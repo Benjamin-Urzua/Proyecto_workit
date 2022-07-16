@@ -26,4 +26,4 @@ def RetornarPerfilEspecialista(run):
         print("Algo ha salido mal: {}".format(err))
     finally:
         conexion.close()
-    return list(response)
+        return list(response)

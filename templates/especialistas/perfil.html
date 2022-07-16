@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta id="vars" data-fotoPerfil="{{perfil[6]}}" data-other="{{other}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -18,81 +19,110 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery.rut@1.1.2/jquery.rut.js"></script>
     <title>Home</title>
     
+    <script>
+        
+        var binary_data = []
+        binary_data.push($("#vars").data()['fotoperfil'])
+        const blob = URL.createObjectURL(new Blob(binary_data, {type: "image/jpeg"}))
+        //console.log(blob)
+        
+        $(document).ready(function(){
+            fotoPerfil = document.getElementById("img_fotoPerfil")
+            fotoPerfil.src = blob
+        })
+        
+    </script>
 
 </head>
 
 <body>
-    <div class="text-center p-4">
-        <img src="https://via.placeholder.com/1375x300.png?text=Portada"  alt="">
+    <div class="text-center p-4 ">
+        <img id="img_fotoPortada" name="img_fotoPortada" src="{{perfil[5]}}"  alt="">
     </div>
     
-
     <div class="container">
         <div class="row">
             <div class="col">
                 <div class="row">
                     <div class="col" style="position: absolute; margin-top: -5%;">
-                        <div><img src="https://via.placeholder.com/150x150.png?text=Perfil" alt=""></div>
+                        <div><img id="img_fotoPerfil" name="img_fotoPerfil" src="" alt=""> <br> <a class="text-primary" id="btn_habilitarEdicion" name="btn_habilitarEdicion" style="margin-left: 1.7%; cursor:pointer;" >Editar perfil</a></div>
                     </div>
                     <div class=" col" style="position: absolute; margin-top: -1%; margin-left: 9%;">
-                        <h1 class="mx-3">Juan <span class="fs-5">lvl.10</span></h1>
-                        <span class="mx-3">Albañil</span>
+                        <h1 class="mx-3" id="lbl_nombreEspecialista" name="lbl_nombreEspecialista">{{ perfil[0] + ' ' + perfil[1] }} <span class="fs-5">lvl.10</span></h1>
+                        <span class="mx-3" id="lbl_profesionEspecialista" name="lbl_profesionEspecialista">{{ perfil[2] }}</span>
                     </div>
                 </div>
             </div>            
             <div class="col d-flex justify-content-end" style="font-size:x-large;">
                 <div class="mx-3">
-                    <a href=""><i class="bi text-primary bi-share-fill"></i></a>
+                    <a href="#"><i class="bi text-primary bi-share-fill"></i></a>
                 </div>
                 <div>
-                    <a href=""><i class="bi text-primary bi-three-dots-vertical"></i></a>
+                    <a href="#"><i class="bi text-primary bi-three-dots-vertical"></i></a>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
-            <div class="d-inline-flex justify-content-end"><button class="btn btn-primary">Editar</button></div>
+            <div class="d-inline-flex justify-content-end"><button id="btn_editarCarrusel" name="btn_editarCarrusel" class="btn btn-primary">Editar</button></div>
         </div>
-        <div class="row">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade w-70" data-bs-ride="carousel">
-                <div class="carousel-inner d-block text-center">
-                  <div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1000x300.png?text=imagen1" alt="...">
+        <div class="row mt-5" id="row_carrusel">
+            <div class="d-flex justify-content-center ">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade w-75" data-bs-ride="carousel">
+                    <div id="div_carrusel" name="div_carrusel" class="carousel-inner d-block text-center">
+                      <div class="carousel-item active">
+                        <img src="{{ perfil[6] }}" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{ perfil[7] }}" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{ perfil[8] }}" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{ perfil[9] }}" alt="...">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" style="position: absolute; left:3%" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" style="position: absolute; right:3%" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
                   </div>
-                  <div class="carousel-item">
-                    <img src="https://via.placeholder.com/1000x300.png?text=imagen2" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://via.placeholder.com/1000x300.png?text=imagen3" alt="...">
-                  </div>
-                </div>
-                <button class="carousel-control-prev" type="button" style="position: absolute; left:10%" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" style="position: absolute; right:10%" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
+            </div>
         </div>
 
         <div class="row mt-5">
             <div class="d-flex justify-content-between align-items-end"">
-                <h5 class="align-bottom ">Juan ofrece...</h5>
-                <button class="btn btn-primary mb-2">Editar</button>
+                <h5 class="align-bottom ">{{ perfil[0] }} ofrece...</h5>
+                <button class="btn btn-primary mb-2" id="btn_editarServicios" name="btn_editarServicios">Editar</button>
             </div>
-            <div style="padding:1px" class="divider bg-primary "></div>
+            <div style="padding:1px" class="divider bg-primary mb-4 "></div>
         </div>
         <div class="row">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">
-                  Cras justo odio
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-              </div>
+            <div id="list-group" class="d-flex justify-content-center " >
+                <div id="list_trabajosEspecialista" name="list_trabajosEspecialista" class="list-group w-75 position-relative" style="height: 65%; overflow:scroll;" data-bs-spy="scroll" data-bs-target="#list-group" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+                    {% for trabajo, valor in zip(perfil[10],perfil[11]) %}
+                    <a href="#" class="list-group-item   list-group-item-action">{{trabajo}}<span class="float-end ">${{valor}}</span></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="d-flex justify-content-between align-items-end"">
+                <h5 class="align-bottom ">Sobre {{ perfil[0] }}...</h5>
+                <button class="btn btn-primary mb-2" id="btn_editarDescripcion" name="btn_editarDescripcion">Editar</button>
+            </div>
+            <div style="padding:1px" class="divider bg-primary mb-4 "></div>
+        </div>
+        <div class="row pb-5">
+            <div class="d-flex justify-content-center">
+                    <textarea style="resize:none; border: 0; background: white; " rows="5" class="form-control w-75" name="txt_descripcion" id="txt_descripcion"
+                    readonly>{{ perfil[3] }}</textarea>
+            </div>
         </div>
     </div>
 </body>

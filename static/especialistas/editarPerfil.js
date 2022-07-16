@@ -1,19 +1,19 @@
-//$("#btn_modificarDescripcion").hide()
-//$("#lbl_editarFotoPerfil").hide()
-//$("#btn_guardarCambios").hide()
+$("#btn_editarCarrusel").hide()
+$("#btn_editarServicios").hide()
+$("#btn_editarDescripcion").hide()
 
 $(document).ready(function () {
     
 
-    /*
+    
     $("#btn_habilitarEdicion").click(function () {
         $("#txt_descripcion").removeAttr("readonly")
-        $("#btn_modificarDescripcion").show()
-        $("#lbl_editarFotoPerfil").show()
-        $("#btn_guardarCambios").show()
-        $(this).hide()
+        $("#row_carrusel").removeClass('mt-5')
+        $("#btn_editarCarrusel").show()
+        $("#btn_editarServicios").show()
+        $("#btn_editarDescripcion").show()
     })
-    */
+    
     
     /*
     let btnImg = document.getElementById("lbl_img")

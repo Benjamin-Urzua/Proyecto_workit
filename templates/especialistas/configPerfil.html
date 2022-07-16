@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/primary.css')  }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.rut@1.1.2/jquery.rut.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/filetype.min.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/locales/es.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Iniciar sesión</title>
+</head>
+
+<body>
+    <div class="container" style="margin-top:5%;">
+        <div id="loader" style="text-align:center; z-index:3; background: rgba(255,255,255,0.5); backdrop-filter: blur(2px); margin: auto; position:absolute; width:100%; height:100%">
+            <div style="position: relative;top:30%">
+                <img class="mx-auto d-block" src="https://res.cloudinary.com/dyqehknhi/image/upload/v1656642829/2b777a13d2df20a20342e24b1fef7ff7_poxrdl.gif" alt="" style="max-width: 10%; height: auto; ">
+                <h5 id="msjLoader" class="text-primary" >Procesando...</h5>
+            </div>
+        </div>
+        <div class="text-center">
+            <h1 class="text-primary">Bienvenido</h1>
+            <h3>Antes de comenzar nos gustaría saber más sobre ti</h3>
+        </div>
+            <br>
+            <form id="form_configPerfil"  method="post" enctype="multipart/form-data">
+                <h5 class="mb-3">Introdúcete. Cuéntanos a que te dedicas y cual es tu trayectoria (máximo 500 palabras):</h5>
+                <div class="d-flex justify-content-center">
+                    <textarea style="resize:none; " rows="5" class="form-control " maxlength="500" name="txt_descripcion" placeholder="Escribe algo interesante, esta será tu carta de presentación" id="txt_descripcion"></textarea>
+                </div>
+
+                <h5 class="mb-3 mt-4">Ahora sube fotos de algunos de tus trabajos (máximo 4). Te sugerimos que estos llamen la atención:</h5>
+                <div class="d-flex justify-content-center file-loading ">
+                    <input id="img_fotosTrabajos" name="img_fotosTrabajos" type="file" class="file"  multiple data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
+                </div>
+
+                <h5 class="mb-3 mt-4">Describe los servicios que ofreces (máximo 10 inicialmente):</h5>
+                <div id="div_servicios">
+                    <div class="row">
+                        <div class="col">
+                            <label for="txt_servicio1">Nombre del servicio:</label>
+                            <input id="txt_servicio1" name="txt_servicio1" placeholder="Ej: Ampliación" class="form-control" type="text">
+                        </div>
+                        <div class="col">
+                            <label for="txt_valorServicio1">Valor del servicio: </label>
+                            <input id="txt_valorServicio1" name="txt_valorServicio1" placeholder="Ej: 1000000" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <button id="btn_agregarServicio" class="btn btn-primary float-end mt-2 mb-3">+ Agregar servicio</button>
+                
+                <h5 class="mb-3 mt-4">Por último, sube una foto de perfil y otra de portada:</h5>
+                <div class="row">
+                    <div class="col">
+                        <input id="img_fotoPerfil" name="img_fotoPortada" type="file" class="file" data-initial-caption="Suba aquí su foto de perfil"  data-drop-zone-title="Arrastre aquí su foto de perfil" data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
+                    </div>
+                    <div class="col">
+                        <input id="img_fotoPortada" name="img_fotoPortada" type="file" class="file"   data-initial-caption="Suba aquí su foto de portada" data-drop-zone-title="Le sugerimos subir el trabajo del que se sienta mas orgulloso"data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <div class="text-center">
+                        <button id="btn_submit" name="btn_submit" class="btn btn-primary w-50" type="submit">Guardar todo</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+</body>
+<script type="text/javascript" src=" {{url_for('static', filename='especialistas/configPerfil.js')  }}"></script>
+
+</html>

@@ -14,11 +14,11 @@ def RegistrarProfesion(nombreProfesion, codRubro):
         conexion.close()
         return list(response)
 
-def RegistrarPerfilEspecialista():
+def RegistrarPerfilEspecialista(descripcion, fotoPerfil, fotoPortada, run ):
     conexion = engine.raw_connection()
     try:
         cursor = conexion.cursor()
-        cursor.callproc('sp_generar_perfilEspecialista')        
+        cursor.callproc('sp_ins_perfilEspecialista', [descripcion, fotoPerfil, fotoPortada, run])        
         response = map(list,cursor.fetchall())
         cursor.close()
         conexion.commit()
@@ -28,6 +28,34 @@ def RegistrarPerfilEspecialista():
         conexion.close()
         return response
     
+def RegistrarFotosTrabajos(foto1, foto2, foto3, foto4):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_ins_fotosTrabajo', [foto1, foto2, foto3, foto4])        
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+        return response
+    
+def RegistrarTrabajo(trabajo, valorTrabajo, run):
+    conexion = engine.raw_connection()
+    try:
+        cursor = conexion.cursor()
+        cursor.callproc('sp_ins_trabajos', [trabajo, valorTrabajo, run])        
+        response = map(list,cursor.fetchall())
+        cursor.close()
+        conexion.commit()
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+    finally:
+        conexion.close()
+        return response
+
 def RegistrarEspecialista(run,nombres,apellidos,telefono,correo, contrasena, cedulaIdentidad, certAntecedentes, certResidencia, tituloProfesional):
     conexion = engine.raw_connection()
     try:

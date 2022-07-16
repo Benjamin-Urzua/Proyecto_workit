@@ -5,6 +5,7 @@ from routes.home import index
 #from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.jinja_env.filters['zip'] = zip
 app.secret_key = 'my_secret_key'
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://workitadmin:workitadminuser@www.db4free.net/proyecto_workit'
