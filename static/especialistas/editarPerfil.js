@@ -1,6 +1,9 @@
 $("#btn_editarCarrusel").hide()
 $("#btn_editarServicios").hide()
 $("#btn_editarDescripcion").hide()
+$("#lbl_editarFotoPerfil").hide()
+$("#lbl_editarFotoPortada").hide()
+
 
 $(document).ready(function () {
     
@@ -12,6 +15,8 @@ $(document).ready(function () {
         $("#btn_editarCarrusel").show()
         $("#btn_editarServicios").show()
         $("#btn_editarDescripcion").show()
+        $("#lbl_editarFotoPerfil").show()
+        $("#lbl_editarFotoPortada").show()
     })
     
     

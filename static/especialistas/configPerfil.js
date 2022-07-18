@@ -57,19 +57,19 @@ $(document).ready(function(){
             contentType:false,
             processData:false,
             success: function (url) {
-                console.log('url: ', url)
-                $('#msjLoader').html('¡Listo!').append('<h5 class="text-primary">Redirigiendo...</h5>')
+                console.log('url: ', url);
+                $('#msjLoader').html('¡Listo!').append('<h5 class="text-primary">Redirigiendo...</h5>');
                 setTimeout(function () {
                   $('#loader').hide();
                   window.location.href = url
-                }, 2000)
+                }, 2000);
               },
               error: function (err) {
-                console.log('err: ', err)
-                $('#msjLoader').html('Algo ha salido mal...').append('<h5 class="text-primary">Vuelva a intentarlo</h5>')
+                console.log('err: ', err);
+                $('#msjLoader').html('Algo ha salido mal...').append('<h5 class="text-primary">Vuelva a intentarlo</h5>');
                 setTimeout(function () {
                   $('#loader').hide();
-                }, 2000)
+                }, 2000);
               }
         });
     })

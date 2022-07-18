@@ -1,10 +1,15 @@
 import base64
 from dataclasses import fields
+from importlib.resources import as_file
+from io import BytesIO
 import json, requests
+import string
+import random
+import os
 from urllib import response
 from sqlalchemy import desc
 from werkzeug.datastructures import FileStorage
-from flask import Blueprint, make_response, render_template, request, jsonify, url_for, redirect, session
+from flask import Blueprint, make_response, render_template, request, jsonify, send_file, url_for, redirect, session
 from sqlalchemy.dialects.mysql import LONGBLOB as blob
 from controllers.home import RetornarPerfilEspecialista
 from controllers.register import  RegistrarDireccion, SelectRubro
@@ -127,44 +132,77 @@ def guardar_registro():
 
 @especialistas.route("/especialistas/configPerfil" , methods=['GET', 'POST'])
 def configPerfil():
-    if request.method == 'GET':
-        return render_template('especialistas/configPerfil.html')
-    else:
-        try:
-            data = request.form.to_dict()
-            images = list(request.files.values())
+    def generarFn(fnlen):
+        return ''.join(random.choice(string.ascii_letters) for i in range(fnlen))
+    try:
+        if request.method == 'GET':
+            return render_template('especialistas/configPerfil.html')
+        else:
+        
+                data = request.form.to_dict()
+                images = list(request.files.values())
             
-            foto1 = blob(images[0].read()).length#Leo el blob de la imagen para subirla
-            foto2 = blob(images[1].read()).length
-            foto3 = blob(images[2].read()).length
-            foto4 = blob(images[3].read()).length
-            fotoPerfil = blob(images[4].read()).length
-            fotoPortada = blob(images[5].read()).length
+                foto1 = images[0]
+                extensionFoto1 = os.path.splitext(foto1.filename)[1]
+                fnFoto1 =generarFn(10)
+                foto1.save(os.path.join('.\static\savedImages', fnFoto1+extensionFoto1))
+                foto1 =  fnFoto1+extensionFoto1
             
-            descripcion = data['txt_descripcion']
+                foto2 = images[1]
+                extensionFoto2 = os.path.splitext(foto2.filename)[1]
+                fnFoto2 =generarFn(10)
+                foto2.save(os.path.join('.\static\savedImages', fnFoto2+extensionFoto2))
+                foto2 =  fnFoto2+extensionFoto2
             
-            listData = list(data)
-            contadorTrabajo = 0
-            for item in listData:
-                if listData.index(item) > 0:
-                    if len(item) < 18:
-                        lastKey = data[item].replace('txt_', '')
-                    else:
-                        contadorTrabajo+=1
-                        RegistrarTrabajo(lastKey, data[item].replace('txt_', ''), session['username'])
+                foto3 = images[2]
+                extensionFoto3 = os.path.splitext(foto3.filename)[1]
+                fnFoto3 =generarFn(10)
+                foto3.save(os.path.join('.\static\savedImages', fnFoto3+extensionFoto3))
+                foto3 =  fnFoto3+extensionFoto3
+            
+                foto4 = images[3]
+                extensionFoto4 = os.path.splitext(foto4.filename)[1]
+                fnFoto4 =generarFn(10)
+                foto4.save(os.path.join('.\static\savedImages', fnFoto4+extensionFoto4))
+                foto4 = fnFoto4+extensionFoto4
+            
+                fotoPerfil = images[4]
+                extensionfotoPerfil = os.path.splitext(fotoPerfil.filename)[1]
+                fnfotoPerfil =generarFn(10)
+                fotoPerfil.save(os.path.join('.\static\savedImages', fnfotoPerfil+extensionfotoPerfil))
+                fotoPerfil =  fnfotoPerfil+extensionfotoPerfil
+            
+                fotoPortada = images[5]
+                extensionfotoPortada = os.path.splitext(fotoPortada.filename)[1]
+                fnfotoPortada =generarFn(10)
+                fotoPortada.save(os.path.join('.\static\savedImages', fnfotoPortada+extensionfotoPortada))
+                fotoPortada = fnfotoPortada+extensionfotoPortada
+            
+            
+                descripcion = data['txt_descripcion']
+            
+                listData = list(data)
+                contadorTrabajo = 0
+                for item in listData:
+                    if listData.index(item) > 0:
+                        if len(item) < 18:
+                            lastKey = data[item].replace('txt_', '')
+                        else:
+                            contadorTrabajo+=1
+                            RegistrarTrabajo(lastKey, data[item].replace('txt_', ''), session['username'])
                         #globals()['trabajo{}'.format(contadorTrabajo)] = lastKey
                         #globals()['valorTrabajo{}'.format(contadorTrabajo)] = 
             #run, foto1, foto2, foto3, foto4, fotoPerfil, fotoPortada, descipcion, trabajo1, valorTrabajo1, trabajo2, valorTrabajo2, trabajo3, valorTrabajo3, trabajo4, valorTrabajo4, trabajo5, valorTrabajo5, trabajo6, valorTrabajo6, trabajo7, valorTrabajo7, trabajo8, valorTrabajo8, trabajo9, valorTrabajo9, trabajo10, valorTrabajo10
             
-            RegistrarFotosTrabajos(foto1, foto2, foto3, foto4)
-            RegistrarPerfilEspecialista(descripcion, fotoPerfil, fotoPortada,session['username'])
+                RegistrarPerfilEspecialista(session['username'],foto1,foto2, foto3, foto4, fotoPerfil, fotoPortada, descripcion)
             
             #print('data: {} \n images: {}'.format(data, images))
             
-        except Exception as err:
-            print("Algo ha salido mal: {}".format(err))
-        finally:
-            return '/'
+    except Exception as err:
+        print("Algo ha salido mal: {}".format(err))
+        return err
+    finally:
+        return '/'
 
 @especialistas.route("/especialistas/perfil" , methods=['GET', 'POST'])
 def perfil():
@@ -177,25 +215,15 @@ def perfil():
             nombres = responsePerfil[0][0]
             apellidos = responsePerfil[0][1]
             profesion = responsePerfil[0][2]
-            descripcion = responsePerfil[0][3]
+            descripcion = responsePerfil[0][3]         
             
-            fotoPerfil = base64.b64encode(responsePerfil[0][4])
-            def is64(coso):
-                try:
-                    return base64.b64encode(base64.b64decode(coso)) == coso
-                except Exception:
-                    return False
-                
-            
-            fotoPerfil = base64.b64encode(responsePerfil[0][4].decode("UTF-8", "ignore").encode("ASCII", "ignore"))
-            fotoPortada = base64.b64encode(responsePerfil[0][5].decode("UTF-8", "ignore").encode("ASCII", "ignore"))
-            foto1 = base64.b64encode(responsePerfil[0][6].decode("UTF-8", "ignore").encode("ASCII", "ignore"))
-            foto2 = base64.b64encode(responsePerfil[0][7].decode("UTF-8", "ignore").encode("ASCII", "ignore"))
-            foto3 = base64.b64encode(responsePerfil[0][8].decode("UTF-8", "ignore").encode("ASCII", "ignore"))
-            foto4 = base64.b64encode(responsePerfil[0][9].decode("UTF-8", "ignore").encode("ASCII", "ignore"))
-            
-            print(json.detect_encoding(fotoPerfil))
-            
+            fotoPerfil = responsePerfil[0][4]
+            fotoPortada = responsePerfil[0][5]
+            foto1 = responsePerfil[0][6]
+            foto2 = responsePerfil[0][7]
+            foto3 = responsePerfil[0][8]
+            foto4 = responsePerfil[0][9]
+                        
             trabajos = []
             valoresTrabajos = []
             for trabajo in responsePerfil:
@@ -203,47 +231,7 @@ def perfil():
                 valoresTrabajos.append(trabajo[11])
                 
             perfil=[nombres, apellidos, profesion, descripcion, fotoPerfil, fotoPortada, foto1, foto2, foto3, foto4, trabajos, valoresTrabajos]
-            '''
-            especialista = responsePerfil[0][0]
-            rubro = responsePerfil[0][1]
-            descripcion = responsePerfil[0][2]
-            
-            fotoPerfil = FileStorage
-            fotoPerfil.stream = responsePerfil[0][3]
-            fotoPerfil.stream = base64.b64encode(fotoPerfil.stream)
-
-            fotoPortada = FileStorage
-            fotoPortada.stream = responsePerfil[0][4]
-            fotoPortada.stream = base64.b64encode(fotoPortada.stream)
-            #fotoPortada = responsePerfil[0][4]
-            trabajos = []
-            valoresTrabajos = []
-            
-            
-            for trabajo in responsePerfil:
-                trabajos.append(trabajo[5])
-                valoresTrabajos.append(trabajo[6])
-            
-            foto1 = FileStorage
-            foto1.stream = responsePerfil[0][7]
-            foto1.stream = base64.b64encode(foto1.stream)
-            
-            foto2 = FileStorage
-            foto2.stream = responsePerfil[0][8]
-            foto2.stream  = base64.b64encode(foto2.stream)
-            
-            foto3 = FileStorage
-            foto3.stream = responsePerfil[0][9]
-            foto3.stream = base64.b64encode(foto3.stream)
-            
-            foto4 = FileStorage
-            foto4.stream = responsePerfil[0][10]
-            foto4.stream = base64.b64encode(foto4.stream)
-            
-            
-            perfil=[especialista, rubro, descripcion, fotoPerfil, fotoPortada, trabajos, valoresTrabajos, foto1, foto2, foto3, foto4]
-            '''
-            
+            print(perfil)
             return render_template('/especialistas/perfil.html', perfil=perfil, zip = zip)
         elif request.method == 'POST':
             data = request.json

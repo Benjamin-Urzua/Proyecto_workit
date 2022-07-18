@@ -4,9 +4,13 @@ from routes.clientes import clientes
 from routes.home import index
 #from flask_sqlalchemy import SQLAlchemy
 
+UPLOAD_FOLDER = '/images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
 app = Flask(__name__)
 app.jinja_env.filters['zip'] = zip
 app.secret_key = 'my_secret_key'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://workitadmin:workitadminuser@www.db4free.net/proyecto_workit'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/bd_workit2.1'
