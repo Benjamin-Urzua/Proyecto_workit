@@ -17,6 +17,7 @@ $(document).ready(function () {
         $("#btn_editarDescripcion").show()
         $("#lbl_editarFotoPerfil").show()
         $("#lbl_editarFotoPortada").show()
+        $(this).text('Guardar cambios')
     })
     
     

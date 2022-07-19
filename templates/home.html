@@ -43,9 +43,11 @@
             <li class="nav-item">
               <a class="nav-link" href="/especialistas/login">Iniciar sesión como especialista</a>
             </li>
+            {% if session['sesion'] and session['rol'] == "cliente": %}
             <li class="nav-item">
               <a class="nav-link" href="/clientes/historial">Ver historial de trabajos</a>
             </li>
+            {% endif %}
             {% if session['sesion'] and session['rol'] == "cliente": %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
