@@ -1,4 +1,7 @@
 import json, requests
+import os
+import string
+import random
 from datetime import datetime
 from msilib.schema import Billboard
 from flask import Blueprint, make_response, render_template, request, jsonify, url_for, redirect, session
@@ -10,17 +13,28 @@ clientes = Blueprint('clientes', __name__)
     
 @clientes.route("/clientes/perfil" , methods=['GET', 'POST'])
 def perfil():
+    def generarFn(fnlen):
+        return ''.join(random.choice(string.ascii_letters) for i in range(fnlen))
     if 'username' in session:
         username = session['username']
         if request.method == 'GET':
             perfil = RetornarPerfilCliente(username)[0]
             print(perfil)
             return render_template('/clientes/perfil.html', perfil = perfil)
-        elif request.method == 'POST':
-            data = request.json
-            fotoPerfil = data["SendInfo"][0]
-            descripcion = data["SendInfo"][1]
+        else:
+            data = request.form.to_dict()
+            images = list(request.files.values())
+            print(data)
+            print(images)
+            
+            fotoPerfil = images[0]
+            extensionfotoPerfil = os.path.splitext(fotoPerfil.filename)[1]
+            fnfotoPerfil =generarFn(10)
+            fotoPerfil.save(os.path.join('.\static\savedImages', fnfotoPerfil+extensionfotoPerfil))
+            fotoPerfil =  fnfotoPerfil+extensionfotoPerfil
+            descripcion = data['txt_descripcion']
             retorno = ActualizarPerfil(username, descripcion, fotoPerfil)
+            session['fotoPerfil'] = fotoPerfil
             if len(retorno) > 0:
                 return "Perfil Actualizado Exitosamente"
             else:
@@ -32,6 +46,8 @@ def logout():
     if 'username' in session:
         session.pop('username')
         session.pop('rol')
+        session.pop('nombre')
+        session.pop('fotoPerfil')
         session['sesion'] = False
     return redirect(url_for('index.home'))
 
@@ -52,6 +68,11 @@ def autentificar():
             session['username'] = authResult[2]
             session['rol'] = 'cliente'
             session['sesion'] = True
+            nombre =str(authResult[3])
+            nombre = nombre.split(" ")
+            nombre.pop()
+            session['nombre'] = nombre[0]
+            session['fotoPerfil'] = authResult[4]
             retorno = {
                 "Msj": "Sesión iniciada correctamente",
                 "Codigo": 1,
@@ -147,6 +168,12 @@ def guardar_registro():
     except Exception as err:
             print("Algo ha salido mal: {}".format(err))
     finally:
+        session['username'] = run
+        session['rol'] = 'cliente'
+        session['sesion'] = True        
+        nombre = nombres.split(" ")
+        nombre.pop()
+        session['nombre'] = nombre[0]
         return '/'
 
 @clientes.route("/clientes/eliminarCuenta" ,methods=['GET', 'POST'])

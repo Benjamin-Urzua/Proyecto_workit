@@ -2118,7 +2118,11 @@ wizard
     color: #ccc;
     padding: 11px 16px;
 }
-
+.offcanvas-footer{
+    max-width: 100%;
+    padding: 1rem 1rem;
+    border-top: 1px solid #dee2e6;
+}
 
 /*-----------------------------
 Side bar

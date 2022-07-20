@@ -39,8 +39,6 @@ $(document).ready(function(){
     })
     
     $("#form_configPerfil").submit(function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
         var form = new FormData(this);
         form.append('foto1:',$("#img_fotosTrabajos")[0].files[0])
         form.append('foto2:',$("#img_fotosTrabajos")[0].files[1])
