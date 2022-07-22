@@ -28,20 +28,6 @@ def RegistrarPerfilEspecialista(run,foto1,foto2, foto3, foto4, fotoPerfil, fotoP
         conexion.close()
         return response
     
-def RegistrarFotosTrabajos(foto1, foto2, foto3, foto4):
-    conexion = engine.raw_connection()
-    try:
-        cursor = conexion.cursor()
-        cursor.callproc('sp_ins_fotosTrabajo', [foto1, foto2, foto3, foto4])        
-        response = map(list,cursor.fetchall())
-        cursor.close()
-        conexion.commit()
-    except Exception as err:
-        print("Algo ha salido mal: {}".format(err))
-    finally:
-        conexion.close()
-        return response
-    
 def RegistrarTrabajo(trabajo, valorTrabajo, run):
     conexion = engine.raw_connection()
     try:

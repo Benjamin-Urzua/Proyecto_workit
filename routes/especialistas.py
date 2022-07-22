@@ -13,7 +13,7 @@ from flask import Blueprint, make_response, render_template, request, jsonify, s
 from sqlalchemy.dialects.mysql import LONGBLOB as blob
 from controllers.home import RetornarPerfilEspecialista
 from controllers.register import  RegistrarDireccion, SelectRubro
-from models.especialista import AutentificarEspecialista, RegistrarEspecialista, RegistrarFotosTrabajos, RegistrarPerfilEspecialista, RegistrarProfesion, RegistrarTrabajo
+from models.especialista import AutentificarEspecialista, RegistrarEspecialista,  RegistrarPerfilEspecialista, RegistrarProfesion, RegistrarTrabajo
 
 especialistas = Blueprint('especialistas', __name__)
 
@@ -154,36 +154,42 @@ def configPerfil():
             
             foto1 = images[0]
             extensionFoto1 = os.path.splitext(foto1.filename)[1]
+            print(foto1.filename)
             fnFoto1 =generarFn(10)
             foto1.save(os.path.join('.\static\savedImages', fnFoto1+extensionFoto1))
             foto1 =  fnFoto1+extensionFoto1
             
             foto2 = images[1]
             extensionFoto2 = os.path.splitext(foto2.filename)[1]
+            print(foto2.filename)
             fnFoto2 =generarFn(10)
             foto2.save(os.path.join('.\static\savedImages', fnFoto2+extensionFoto2))
             foto2 =  fnFoto2+extensionFoto2
             
             foto3 = images[2]
             extensionFoto3 = os.path.splitext(foto3.filename)[1]
+            print(foto3.filename)
             fnFoto3 =generarFn(10)
             foto3.save(os.path.join('.\static\savedImages', fnFoto3+extensionFoto3))
             foto3 =  fnFoto3+extensionFoto3
             
             foto4 = images[3]
             extensionFoto4 = os.path.splitext(foto4.filename)[1]
+            print(foto4.filename)
             fnFoto4 =generarFn(10)
             foto4.save(os.path.join('.\static\savedImages', fnFoto4+extensionFoto4))
             foto4 = fnFoto4+extensionFoto4
             
             fotoPerfil = images[4]
             extensionfotoPerfil = os.path.splitext(fotoPerfil.filename)[1]
+            print(fotoPerfil.filename)
             fnfotoPerfil =generarFn(10)
             fotoPerfil.save(os.path.join('.\static\savedImages', fnfotoPerfil+extensionfotoPerfil))
             fotoPerfil =  fnfotoPerfil+extensionfotoPerfil
             
             fotoPortada = images[5]
             extensionfotoPortada = os.path.splitext(fotoPortada.filename)[1]
+            print(fotoPortada.filename)
             fnfotoPortada =generarFn(10)
             fotoPortada.save(os.path.join('.\static\savedImages', fnfotoPortada+extensionfotoPortada))
             fotoPortada = fnfotoPortada+extensionfotoPortada
@@ -212,7 +218,8 @@ def configPerfil():
             print("Algo ha salido mal: {}".format(err))
             return err
         finally:
-            return '/especialistas/logout'
+            session['fotoPerfil'] = fotoPerfil
+            return redirect(url_for("especialistas.logout"))
 
 @especialistas.route("/especialistas/perfil" , methods=['GET', 'POST'])
 def perfil():
@@ -221,7 +228,7 @@ def perfil():
         if request.method == 'GET':
             
             responsePerfil = RetornarPerfilEspecialista(username)
-            
+            print(responsePerfil)
             nombres = responsePerfil[0][0]
             apellidos = responsePerfil[0][1]
             profesion = responsePerfil[0][2]

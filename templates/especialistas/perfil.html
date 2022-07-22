@@ -25,7 +25,7 @@
 
 <style>
     .with-bg-size{
-        background-image: url("{{url_for('static', filename='savedImages/{}'.format(perfil[8]))}}");
+        background-image: url("{{url_for('static', filename='savedImages/{}'.format(perfil[4]))}}");
         width: 1350px;
         height: 300px;
         background-position: center;
@@ -54,10 +54,10 @@
                         <input id="img_foto1" name="img_foto1" type="file" class="file" data-initial-preview="<img class='file-preview-image' src='{{url_for('static', filename='savedImages/{}'.format(perfil[4]))}}' >"  data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
                     </div>
                     <div class="col-6 mb-3">
-                        <input id="img_foto2" name="img_foto2" type="file" class="file"  data-initial-preview="<img class='file-preview-image' src='{{url_for('static', filename='savedImages/{}'.format(perfil[5]))}}' >" data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
+                        <input id="img_foto2" name="img_foto2" type="file" class="file"  data-initial-preview="<img class='file-preview-image' src='{{url_for('static', filename='savedImages/{}'.format(perfil[7]))}}' >" data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
                     </div>
                     <div class="col-6">
-                        <input id="img_foto3" name="img_foto3" type="file" class="file"   data-initial-preview="<img class='file-preview-image' src='{{url_for('static', filename='savedImages/{}'.format(perfil[6]))}}' >" data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
+                        <input id="img_foto3" name="img_foto3" type="file" class="file"   data-initial-preview="<img class='file-preview-image' src='{{url_for('static', filename='savedImages/{}'.format(perfil[8]))}}' >" data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
                     </div>
                     <div class="col-6">
                         <input id="img_foto4" name="img_foto4" type="file" class="file"  data-initial-preview="<img class='file-preview-image' src='{{url_for('static', filename='savedImages/{}'.format(perfil[9]))}}' >"  data-show-upload="false" data-language="es"   accept=".jpg, .jpeg">
@@ -119,7 +119,7 @@
                 <div class="row">
                     <div class="col" style="position: absolute; margin-top: -5%;">
                         <div class="border border-5 rounded  border-primary d-inline-flex align-items-end flex-column "  style="max-height: 150px; max-width: 150px;">
-                            <img style="width: 195px; height: 195px;" class="img-fluid" name="img_fotoPerfil" id="img_fotoPerfil" src=" {{url_for('static', filename='savedImages/{}'.format(perfil[7]))}}" alt="Foto de perfil">
+                            <img style="width: 195px; height: 195px;" class="img-fluid" name="img_fotoPerfil" id="img_fotoPerfil" src=" {{url_for('static', filename='savedImages/{}'.format(perfil[5]))}}" alt="Foto de perfil">
                             <label id="lbl_editarFotoPerfil"  style="margin-top: -19%; cursor:pointer;" for="img">
                                 <input type="file" name="img" id="input_fotoPerfil" style="display:none"  directory accept=".jpg, .jpeg, .png" >
                                 <i class="bi bi-pencil-square text-primary fw-bold"  style="font-size: 1.3rem; " onclick="document.getElementById('input_fotoPerfil').click()"></i>
@@ -154,10 +154,10 @@
                         <img style="max-width:1000px;max-height:500px;" src="{{url_for('static', filename='savedImages/{}'.format(perfil[4]))}}" alt="...">
                       </div>
                       <div class="carousel-item">
-                        <img style="max-width:1000px;max-height:500px;" src="{{url_for('static', filename='savedImages/{}'.format(perfil[5]))}}" alt="...">
+                        <img style="max-width:1000px;max-height:500px;" src="{{url_for('static', filename='savedImages/{}'.format(perfil[7]))}}" alt="...">
                       </div>
                       <div class="carousel-item">
-                        <img style="max-width:1000px;max-height:500px;" src="{{url_for('static', filename='savedImages/{}'.format(perfil[6]))}}" alt="...">
+                        <img style="max-width:1000px;max-height:500px;" src="{{url_for('static', filename='savedImages/{}'.format(perfil[8]))}}" alt="...">
                       </div>
                       <div class="carousel-item">
                         <img style="max-width:1000px;max-height:500px;" src="{{url_for('static', filename='savedImages/{}'.format(perfil[9]))}}" alt="...">
